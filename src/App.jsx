@@ -16,6 +16,7 @@ import DocumentGenerator from "./pages/portal/DocumentGenerator";
 import DetectiveEngine from "./pages/portal/DetectiveEngine";
 import SurakshaSetu from "./pages/portal/SurakshaSetu";
 import RoadmapPage from "./pages/portal/Roadmap";
+import  ErrorPage from "./pages/portal/Error";
 import ChatPage from "./pages/portal/Chat";
 import CareerTasks from "./pages/portal/Forage"
 
@@ -37,10 +38,13 @@ const App = () => {
           <Route path="investigation/roadmap" element={<RoadmapPage />} />
           <Route path="experince" element={<CareerTasks />} />
           <Route path="chat" element={<ChatPage />} />
+          <Route path="error" element={<ErrorPage />} />
+
         </Route>
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
+
     </Routes>
   );
 };

@@ -87,7 +87,7 @@ const Layout = () => {
     {
       icon: Brain,
       label: "Prediction Model",
-      path: "/dashboard/investigation",
+      path: "/dashboard/Error",
     },
     // {
     //   icon: UsersRound,
