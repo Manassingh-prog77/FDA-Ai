@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto"; // Chart.js v3+
@@ -9,41 +9,40 @@ const TimeSeriesFraudChart = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [timeFilter, setTimeFilter] = useState("hour");
 
-  // Function to process CSV
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+  // Function to fetch and parse CSV file from public folder
+  useEffect(() => {
+    fetch("/transactions.csv")
+      .then((response) => response.text())
+      .then((csvData) => {
+        Papa.parse(csvData, {
+          complete: (result) => {
+            const rawData = result.data;
+            if (rawData.length > 1) {
+              // Extract headers
+              const headers = rawData[0];
+              const rows = rawData.slice(1);
 
-    if (file) {
-      Papa.parse(file, {
-        complete: (result) => {
-          const rawData = result.data;
-          if (rawData.length > 1) {
-            // Extract headers
-            const headers = rawData[0];
-            const rows = rawData.slice(1);
-
-            // Map rows to objects
-            const formattedData = rows.map((row) => {
-              return {
+              // Map rows to objects
+              const formattedData = rows.map((row) => ({
                 transaction_date: row[headers.indexOf("transaction_date")],
                 is_fraud: row[headers.indexOf("is_fraud")], // 1 = Fraud, 0 = Not Fraud
-              };
-            });
+              }));
 
-            // Filter valid transactions
-            const validTransactions = formattedData.filter(
-              (item) => item.transaction_date && item.is_fraud !== undefined
-            );
+              // Filter valid transactions
+              const validTransactions = formattedData.filter(
+                (item) => item.transaction_date && item.is_fraud !== undefined
+              );
 
-            setTransactions(validTransactions);
-            filterData(validTransactions, "hour");
-          }
-        },
-        header: false,
-        skipEmptyLines: true,
-      });
-    }
-  };
+              setTransactions(validTransactions);
+              filterData(validTransactions, "hour");
+            }
+          },
+          header: false,
+          skipEmptyLines: true,
+        });
+      })
+      .catch((error) => console.error("Error fetching CSV file:", error));
+  }, []);
 
   // Function to filter transactions by time
   const filterData = (data, filter) => {
@@ -62,15 +61,23 @@ const TimeSeriesFraudChart = () => {
       }
 
       if (!groupedData[timeInstance]) {
-        groupedData[timeInstance] = 0;
+        groupedData[timeInstance] = { fraudCount: 0, totalCount: 0 };
       }
 
+      groupedData[timeInstance].totalCount++; // Count all transactions
+
       if (transaction.is_fraud === "1") {
-        groupedData[timeInstance]++;
+        groupedData[timeInstance].fraudCount++; // Count fraud transactions
       }
     });
 
-    setFilteredData(Object.entries(groupedData).map(([time, count]) => ({ time, count })));
+    setFilteredData(
+      Object.entries(groupedData).map(([time, { fraudCount, totalCount }]) => ({
+        time,
+        fraudCount,
+        totalCount,
+      }))
+    );
   };
 
   // Handle filter change
@@ -86,9 +93,16 @@ const TimeSeriesFraudChart = () => {
     datasets: [
       {
         label: "Fraudulent Transactions",
-        data: filteredData.map((d) => d.count),
+        data: filteredData.map((d) => d.fraudCount),
         borderColor: "#FF0000",
         backgroundColor: "rgba(255, 0, 0, 0.2)",
+        tension: 0.3,
+      },
+      {
+        label: "Total Transactions",
+        data: filteredData.map((d) => d.totalCount),
+        borderColor: "#00FF00",
+        backgroundColor: "rgba(0, 255, 0, 0.2)",
         tension: 0.3,
       },
     ],
@@ -104,14 +118,6 @@ const TimeSeriesFraudChart = () => {
       >
         Fraud Transactions Time Series
       </motion.h1>
-
-      {/* File Upload */}
-      <input
-        type="file"
-        accept=".csv"
-        onChange={handleFileUpload}
-        className="mb-4 p-2 border rounded bg-gray-800 text-white"
-      />
 
       {/* Time Filter Dropdown */}
       <select
@@ -130,7 +136,7 @@ const TimeSeriesFraudChart = () => {
           <Line data={chartData} />
         </div>
       ) : (
-        <p className="text-gray-400">Upload a CSV file to see the graph.</p>
+        <p className="text-gray-400">Loading data from CSV...</p>
       )}
     </div>
   );
