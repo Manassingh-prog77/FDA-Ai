@@ -18,7 +18,8 @@ import SurakshaSetu from "./pages/portal/SurakshaSetu";
 import RoadmapPage from "./pages/portal/Roadmap";
 import  ErrorPage from "./pages/portal/Error";
 import ChatPage from "./pages/portal/Chat";
-import CareerTasks from "./pages/portal/Forage"
+import CareerTasks from "./pages/portal/Forage";
+import TimeSeriesFraudChart from "./pages/portal/Graph";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="experince" element={<CareerTasks />} />
           <Route path="chat" element={<ChatPage />} />
           <Route path="error" element={<ErrorPage />} />
+          <Route path="graph" element={<TimeSeriesFraudChart />} />
 
         </Route>
       </Route>

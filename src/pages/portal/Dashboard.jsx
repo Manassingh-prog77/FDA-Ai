@@ -7,7 +7,7 @@ import {
   AlertTriangle,
   Map,
   Download,
-  RefreshCw,
+  Lock,MailWarning,Activity,ShieldCheck,
   Clock,
   PieChart as PieChartIcon,
 } from "lucide-react";
@@ -27,6 +27,7 @@ import {
   PieChart,
   Pie,
   Cell,
+   
 } from "recharts";
 
 // Hardcoded sample data remains unchanged
@@ -205,12 +206,12 @@ const Dashboard = () => {
   };
 
   const renderTrendChart = () => {
-    // Default values for career trend analysis
-    const trendData = [
-      { period: 'Q1', jobDemand: 80, industryGrowth: 15 },
-      { period: 'Q2', jobDemand: 85, industryGrowth: 18 },
-      { period: 'Q3', jobDemand: 90, industryGrowth: 20 },
-      { period: 'Q4', jobDemand: 95, industryGrowth: 25 },
+    // Fraud trend dataset (Quarterly analysis)
+    const fraudTrendData = [
+      { period: "Q1", fraudCases: 120, riskScore: 35 },
+      { period: "Q2", fraudCases: 150, riskScore: 40 },
+      { period: "Q3", fraudCases: 180, riskScore: 45 },
+      { period: "Q4", fraudCases: 200, riskScore: 50 },
     ];
   
     return (
@@ -218,59 +219,74 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-black/50 backdrop-blur-xl p-4 rounded-xl border border-cyan-500/20 mb-6"
+        className="bg-gray-900/50 backdrop-blur-xl p-6 rounded-xl border border-cyan-500/30 shadow-lg mb-6"
       >
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-cyan-400">Career Trend Analysis</h3>
+          {/* Section Title */}
+          <h3 className="text-lg font-semibold text-cyan-400">Fraud Trend Analysis</h3>
+  
+          {/* Export Button */}
           <motion.button
-            onClick={() => alert("Exporting...")}
+            onClick={() => alert("Exporting fraud trend data...")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1 text-sm bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-3 py-1.5 rounded-md transition-colors"
+            className="flex items-center gap-2 text-sm bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-4 py-2 rounded-md transition-all"
           >
             <Download className="w-4 h-4" />
-            Export
+            Export Data
           </motion.button>
         </div>
+  
+        {/* Chart Container */}
         <ResponsiveContainer width="100%" height={350}>
           <BarChart
-            data={trendData}
+            data={fraudTrendData}
             margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
           >
+            {/* Grid Lines */}
             <CartesianGrid strokeDasharray="3 3" stroke="#06B6D4" opacity={0.2} />
+  
+            {/* X & Y Axis Config */}
             <XAxis
               dataKey="period"
               angle={-45}
               textAnchor="end"
               height={70}
               stroke="#A5B4FC"
+              label={{ position: "insideBottom", offset: -20, fill: "#A5B4FC" }}
             />
-            <YAxis stroke="#A5B4FC" />
+            <YAxis stroke="#A5B4FC" label={{ value: "Fraud Cases", angle: -90, position: "insideLeft", fill: "#A5B4FC" }} />
+  
+            {/* Tooltip Styling */}
             <Tooltip
               contentStyle={{
-                backgroundColor: "#000000",
+                backgroundColor: "#1E293B",
                 border: "1px solid #06B6D4",
                 color: "#E0E7FF",
               }}
             />
+  
+            {/* Legend for better understanding */}
             <Legend wrapperStyle={{ color: "#A5B4FC" }} />
-            <Bar dataKey="jobDemand" name="Job Demand" fill="#06B6D4" />
-            <Bar dataKey="industryGrowth" name="Industry Growth Rate (%)" fill="#3B82F6" />
+  
+            {/* Fraud Cases & Risk Score Bars */}
+            <Bar dataKey="fraudCases" name="Fraud Cases" fill="#F87171" />
+            <Bar dataKey="riskScore" name="Risk Score (%)" fill="#FACC15" />
           </BarChart>
         </ResponsiveContainer>
       </motion.div>
     );
   };
   
+  
 
   const renderDistributionChart = () => {
-    // Default distribution data for career guidance analysis
-    const distributionData = [
-      { name: 'Technology', value: 40 },
-      { name: 'Healthcare', value: 30 },
-      { name: 'Education', value: 15 },
-      { name: 'Finance', value: 10 },
-      { name: 'Retail', value: 5 },
+    const fraudDistributionData = [
+      { name: "Online Scams", value: 40 },
+      { name: "Card Fraud", value: 30 },
+      { name: "Identity Theft", value: 15 },
+      { name: "Phishing Attacks", value: 10 },
+      { name: "Unauthorized Transactions", value: 5 },
     ];
   
     return (
@@ -278,13 +294,16 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-black/50 backdrop-blur-xl p-4 rounded-xl border border-cyan-500/20 mb-6"
+        className="bg-gray-900/50 backdrop-blur-xl p-6 rounded-xl border border-cyan-500/30 shadow-lg mb-6"
       >
-        <h3 className="text-lg font-medium text-cyan-400 mb-4">Career Sector Distribution</h3>
+        {/* Section Title */}
+        <h3 className="text-lg font-semibold text-cyan-400 mb-4">Fraud Distribution Analysis</h3>
+  
+        {/* Chart Container */}
         <ResponsiveContainer width="100%" height={350}>
           <PieChart>
             <Pie
-              data={distributionData}
+              data={fraudDistributionData}
               cx="50%"
               cy="50%"
               labelLine={true}
@@ -292,22 +311,24 @@ const Dashboard = () => {
               fill="#8884d8"
               dataKey="value"
               nameKey="name"
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
+              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
             >
-              {distributionData.map((entry, index) => (
+              {fraudDistributionData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
+  
+            {/* Tooltip for Fraud Type Details */}
             <Tooltip
-              formatter={(value) => [`${value} jobs`, "Job Count"]}
+              formatter={(value, name) => [`${value} cases`, `${name}`]}
               contentStyle={{
-                backgroundColor: "#000000",
+                backgroundColor: "#1E293B",
                 border: "1px solid #06B6D4",
                 color: "#E0E7FF",
               }}
             />
+  
+            {/* Legend for fraud categories */}
             <Legend wrapperStyle={{ color: "#A5B4FC" }} />
           </PieChart>
         </ResponsiveContainer>
@@ -317,12 +338,12 @@ const Dashboard = () => {
   
   const renderHotspotMap = () => {
     // Default hotspot data for career guidance analysis
-    const hotspotData = [
-      { location: 'Technology Sector - Silicon Valley', riskScore: 9, incidentCount: 120, demandScore: 9 },
-      { location: 'Healthcare Sector - Boston', riskScore: 8, incidentCount: 95, demandScore: 8 },
-      { location: 'Finance Sector - New York City', riskScore: 7, incidentCount: 75, demandScore: 7 },
-      { location: 'Education Sector - Chicago', riskScore: 6, incidentCount: 50, demandScore: 6 },
-      { location: 'Retail Sector - Los Angeles', riskScore: 5, incidentCount: 30, demandScore: 5 },
+    const fraudHotspotData = [
+      { location: "Silicon Valley - Tech Fraud", riskScore: 9, incidentCount: 120, severity: "Critical" },
+      { location: "New York - Banking Fraud", riskScore: 8, incidentCount: 95, severity: "High" },
+      { location: "Los Angeles - Identity Theft", riskScore: 7, incidentCount: 75, severity: "Medium" },
+      { location: "Chicago - Phishing Attacks", riskScore: 6, incidentCount: 50, severity: "Medium" },
+      { location: "Houston - Retail Scams", riskScore: 5, incidentCount: 30, severity: "Low" },
     ];
   
     return (
@@ -330,15 +351,19 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-black/50 backdrop-blur-xl p-4 rounded-xl border border-cyan-500/20 mb-6"
+        className="bg-gray-900/50 backdrop-blur-xl p-6 rounded-xl border border-red-500/30 shadow-lg mb-6"
       >
-        <h3 className="text-lg font-medium text-cyan-400 mb-4">Career Opportunity Hotspot Analysis</h3>
-        <div className="border border-cyan-500/20 rounded-lg overflow-hidden">
-          <div className="p-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-cyan-500/20">
-            <h4 className="font-medium text-gray-300">Top High-Opportunity Areas</h4>
+        {/* Section Title */}
+        <h3 className="text-lg font-semibold text-red-400 mb-4">Fraud Risk Hotspot Analysis</h3>
+  
+        {/* Hotspot List */}
+        <div className="border border-red-500/20 rounded-lg overflow-hidden">
+          <div className="p-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-500/20">
+            <h4 className="font-medium text-gray-300">Top High-Risk Areas</h4>
           </div>
-          <ul className="divide-y divide-cyan-500/20">
-            {hotspotData.map((area, index) => (
+  
+          <ul className="divide-y divide-red-500/20">
+            {fraudHotspotData.map((area, index) => (
               <motion.li
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
@@ -346,63 +371,60 @@ const Dashboard = () => {
                 transition={{ delay: index * 0.1 }}
                 className="p-4 flex items-start gap-3"
               >
+                {/* Rank Badge */}
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    index === 0
-                      ? 'bg-green-500/20 text-green-400'
-                      : index === 1
-                      ? 'bg-teal-500/20 text-teal-400'
-                      : index === 2
-                      ? 'bg-blue-500/20 text-blue-400'
-                      : index === 3
-                      ? 'bg-yellow-500/20 text-yellow-400'
-                      : 'bg-gray-500/20 text-gray-400'
+                    area.riskScore >= 8
+                      ? "bg-red-500/20 text-red-400"
+                      : area.riskScore >= 6
+                      ? "bg-orange-500/20 text-orange-400"
+                      : "bg-yellow-500/20 text-yellow-400"
                   }`}
                 >
                   {index + 1}
                 </div>
+  
+                {/* Fraud Location Details */}
                 <div>
                   <p className="font-medium text-gray-300">{area.location}</p>
                   <div className="flex gap-6 mt-1 text-sm text-gray-400">
                     <span className="flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4" />
-                      Demand: {area.demandScore}/10
+                      Risk Score: {area.riskScore}/10
                     </span>
                     <span className="flex items-center gap-1">
                       <BarChart3 className="w-4 h-4" />
-                      {area.incidentCount} opportunities
+                      {area.incidentCount} reported cases
                     </span>
                   </div>
+  
+                  {/* Risk Severity Indicator */}
                   <div className="mt-2">
-                    <div className="text-xs font-medium mb-1 flex justify-between text-cyan-400">
-                      <span>Opportunity level</span>
+                    <div className="text-xs font-medium mb-1 flex justify-between text-red-400">
+                      <span>Fraud Severity</span>
                       <span
                         className={
-                          area.demandScore >= 8
-                            ? 'text-green-400'
-                            : area.demandScore >= 6
-                            ? 'text-teal-400'
-                            : 'text-yellow-400'
+                          area.riskScore >= 8
+                            ? "text-red-400"
+                            : area.riskScore >= 6
+                            ? "text-orange-400"
+                            : "text-yellow-400"
                         }
                       >
-                        {area.demandScore >= 8
-                          ? 'High'
-                          : area.demandScore >= 6
-                          ? 'Medium'
-                          : 'Low'}
+                        {area.severity}
                       </span>
                     </div>
-                    <div className="w-full bg-green-500/10 rounded-full h-2">
+                    <div className="w-full bg-red-500/10 rounded-full h-2">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${area.demandScore * 10}%` }}
+                        animate={{ width: `${area.riskScore * 10}%` }}
                         transition={{ duration: 0.5 }}
                         className={`h-2 rounded-full ${
-                          area.demandScore >= 8
-                            ? 'bg-green-500'
-                            : area.demandScore >= 6
-                            ? 'bg-teal-500'
-                            : 'bg-yellow-500'
+                          area.riskScore >= 8
+                            ? "bg-red-500"
+                            : area.riskScore >= 6
+                            ? "bg-orange-500"
+                            : "bg-yellow-500"
                         }`}
                       />
                     </div>
@@ -418,40 +440,54 @@ const Dashboard = () => {
   
 
   const renderRecommendations = () => {
-    // Default recommendations for career guidance analysis
-    const recommendations = [
+    const fraudPreventionTips = [
       {
-        title: 'Upskill with Data Science',
+        title: 'Monitor Unusual Transactions',
         description:
-          'Data Science is one of the fastest-growing fields. Consider pursuing a certification in data analysis, machine learning, or artificial intelligence.',
-        metrics: 'Expected impact: +30% in job market demand within 2 years',
+          'Use AI-powered fraud detection systems to monitor unusual patterns, such as high-value transactions or multiple withdrawals within a short period.',
+        metrics: 'Impact: +40% reduction in fraudulent transactions',
+        color: 'red',
+        icon: <AlertTriangle className="w-4 h-4" />,
+        impact: 40,
       },
       {
-        title: 'Enhance Your Leadership Skills',
+        title: 'Enable Multi-Factor Authentication (MFA)',
         description:
-          'Leadership and management skills are essential for advancing in your career. Enroll in leadership training programs or pursue an MBA.',
-        metrics: 'Expected impact: +20% in promotion opportunities within 1 year',
+          'Adding MFA to your authentication process significantly reduces unauthorized access attempts by requiring an additional verification step.',
+        metrics: 'Impact: +60% increase in account security',
+        color: 'blue',
+        icon: <ShieldCheck className="w-4 h-4" />,
+        impact: 60,
       },
       {
-        title: 'Expand Your Network in the Tech Industry',
+        title: 'Use Real-Time Transaction Analysis',
         description:
-          'Building a professional network in the tech industry can open up opportunities. Attend events, webinars, and join industry groups.',
-        metrics: 'Expected impact: +25% in job referrals and opportunities',
+          'Implement real-time analytics to identify suspicious transaction behavior instantly and block fraudulent activities before they occur.',
+        metrics: 'Impact: +35% improvement in fraud detection accuracy',
+        color: 'green',
+        icon: <Activity className="w-4 h-4" />,
+        impact: 35,
       },
       {
-        title: 'Explore Remote Work Opportunities',
+        title: 'Educate Users on Phishing Scams',
         description:
-          'Remote work is increasingly in demand. Explore career opportunities in remote work platforms like LinkedIn, Upwork, and Indeed.',
-        metrics: 'Expected impact: +15% in work-life balance satisfaction',
+          'Regularly inform customers about phishing scams and social engineering attacks that trick them into revealing sensitive information.',
+        metrics: 'Impact: +50% reduction in successful phishing attacks',
+        color: 'yellow',
+        icon: <MailWarning className="w-4 h-4" />,
+        impact: 50,
       },
       {
-        title: 'Certify Your Project Management Skills',
+        title: 'Encrypt Sensitive Data',
         description:
-          'Project management certifications like PMP or Agile can boost your career in management roles across various industries.',
-        metrics: 'Expected impact: +40% in managerial job opportunities',
+          'Ensure end-to-end encryption of payment information and personal data to prevent unauthorized access and data breaches.',
+        metrics: 'Impact: +70% increase in data security',
+        color: 'purple',
+        icon: <Lock className="w-4 h-4" />,
+        impact: 70,
       },
     ];
-  
+    
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -459,28 +495,45 @@ const Dashboard = () => {
         transition={{ duration: 0.5 }}
         className="bg-black/50 backdrop-blur-xl p-4 rounded-xl border border-cyan-500/20 mb-6"
       >
-        <h3 className="text-lg font-medium text-cyan-400 mb-4">
-          Career Growth Recommendations
+        <h3 className="text-lg font-medium text-red-400 mb-4">
+          Fraud Prevention Strategies
         </h3>
         <ul className="space-y-3">
-          {recommendations.map((rec, index) => (
+          {fraudPreventionTips.map((tip, index) => (
             <motion.li
               key={index}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-start gap-3 p-3 bg-cyan-500/5 rounded-lg border border-cyan-500/20"
+              className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg border border-gray-700"
             >
-              <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
-                <RefreshCw className="w-4 h-4 text-cyan-400" />
+              {/* Icon with dynamic color */}
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-${tip.color}-500/10 text-${tip.color}-400`}
+              >
+                {tip.icon}
               </div>
+    
+              {/* Fraud Prevention Content */}
               <div>
-                <p className="font-medium text-gray-300">{rec.title}</p>
-                <p className="text-sm text-gray-400 mt-1">{rec.description}</p>
-                {rec.metrics && (
-                  <div className="mt-2 bg-cyan-500/10 p-2 rounded border border-cyan-500/20">
+                <p className="font-medium text-gray-300">{tip.title}</p>
+                <p className="text-sm text-gray-400 mt-1">{tip.description}</p>
+    
+                {/* Expected Impact Section */}
+                {tip.metrics && (
+                  <div className="mt-2 p-2 rounded bg-gray-900 border border-gray-700">
                     <p className="text-xs text-gray-400">Expected impact:</p>
-                    <p className="text-sm font-medium text-cyan-400">{rec.metrics}</p>
+                    <p className="text-sm font-medium text-red-400">{tip.metrics}</p>
+    
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${tip.impact}%` }}
+                        transition={{ duration: 0.5 }}
+                        className={`h-2 rounded-full bg-${tip.color}-500`}
+                      />
+                    </div>
                   </div>
                 )}
               </div>
@@ -488,7 +541,7 @@ const Dashboard = () => {
           ))}
         </ul>
       </motion.div>
-    );
+    );    
   };
   
 
@@ -583,7 +636,7 @@ const Dashboard = () => {
                   <h3 className="text-lg font-medium text-cyan-400 mb-2">
                     Analysis Overview
                   </h3>
-                  <p className="text-gray-300">Sample analysis showcasing career trends across industries and regions.</p>
+                  <p className="text-gray-300">Explore in-depth analyses revealing fraud patterns across industries and regions with AI-powered detection.</p>
                   {analysisResults.keyInsights && (
                     <div className="mt-4">
                       <h4 className="font-medium text-cyan-400 mb-2">
@@ -595,14 +648,14 @@ const Dashboard = () => {
                             animate={{ opacity: 1, x: 0 }}
                             className="flex items-start gap-2">
                             <TrendingUp className="w-5 h-5 mt-0.5 flex-shrink-0 text-cyan-400" />
-                            <span>Growing Demand for Tech Roles: Emerging industries, such as AI, data science, and cybersecurity, are driving a surge in demand for tech professionals, offering newcomers ample opportunities to enter the workforce with high-growth potential.</span>
+                            <span>Rising Fraud Tactics: Emerging threats in AI, fintech, and cybersecurity are fueling a surge in fraudulent activities, highlighting the need for advanced detection systems to safeguard transactions and prevent financial crimes.</span>
                           </motion.li>
                           <motion.li
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             className="flex items-start gap-2">
                             <TrendingUp className="w-5 h-5 mt-0.5 flex-shrink-0 text-cyan-400" />
-                            <span>Remote Work Opportunities: Many sectors are embracing remote work, creating flexibility for newcomers to explore roles in different locations and maintain a better work-life balance. This trend expands career options beyond traditional geographical limitations.</span>
+                            <span>Expanding Fraud Risks: The shift to digital transactions has opened new avenues for cybercriminals, making it crucial to implement robust fraud detection systems that adapt to evolving threats and secure financial integrity.</span>
                           </motion.li>
                       </ul>
                     </div>
@@ -611,13 +664,13 @@ const Dashboard = () => {
 
                 <div className="flex border-b border-cyan-500/20 mb-6 overflow-x-auto">
                   {[
-                    { id: "trends", icon: TrendingUp, label: "Market Trends" },
+                    { id: "trends", icon: TrendingUp, label: "Fraud Trends" },
                     {
                       id: "distribution",
                       icon: PieChartIcon,
-                      label: "Market Distribution",
+                      label: "Fraud Distribution",
                     },
-                    { id: "hotspots", icon: Map, label: " Competetion Zone" },
+                    { id: "hotspots", icon: Map, label: " Fraud Zone" },
                     {
                       id: "recommendations",
                       icon: AlertTriangle,

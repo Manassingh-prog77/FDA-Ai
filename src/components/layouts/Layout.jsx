@@ -110,7 +110,7 @@ const Layout = () => {
     {
       icon: ChartArea,
       label: "Time Series Graph",
-      path: "/dashboard/experince",
+      path: "/dashboard/graph",
     },
     // { icon: BarChart2, label: "Budget Buddy", path: "/dashboard/knowledge" },
   ];
