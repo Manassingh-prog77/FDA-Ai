@@ -1,14 +1,13 @@
-import React from "react";
 import { motion } from "framer-motion";
 import {
-  UserCheck,
   MessageCircle,
-  Users,
-  DollarSign,
-  ClipboardList,
-  Map,
-  TrendingUp,
-  Lightbulb,
+  ShieldCheck,  
+  Users, 
+  FileSearch, 
+  ClipboardList, 
+  Eye, 
+  TrendingDown, 
+  Lock ,
 } from "lucide-react";
 
 const FeatureCard = ({ icon: Icon, title, description, delay }) => {
@@ -45,31 +44,31 @@ const FeatureCard = ({ icon: Icon, title, description, delay }) => {
 const Features = () => {
   const features = [
     {
-      icon: UserCheck,
-      title: "AI Career Advisor",
+      icon: ShieldCheck,
+      title: "AI Fraud Detection",
       description:
-        "Personalized career recommendations based on your skills, education, and interests, providing clear roadmaps and timelines for each career path.",
+        "Leverage AI-driven algorithms to detect fraudulent transactions and prevent financial losses in real-time.",
       delay: 0.1,
     },
     {
       icon: MessageCircle,
-      title: "AI Counselor Chat",
+      title: "Fraud Analysis Chatbot",
       description:
-        "Interact with our AI-powered counselor to get instant answers to your career-related questions and receive guidance tailored to your unique profile.",
+        "Chat with our AI-powered assistant to analyze suspicious transactions and get real-time insights on potential fraud risks.",
       delay: 0.2,
     },
     {
       icon: Users,
-      title: "Professional Networking",
+      title: "User Risk Profiling",
       description:
-        "Connect with professionals in your desired field to gain insights, mentorship, and real-world perspectives on your chosen career path.",
+        "Assess user behavior, transaction history, and risk levels to proactively prevent fraudulent activities.",
       delay: 0.3,
     },
     {
-      icon: DollarSign,
-      title: "Expense Estimator",
+      icon: FileSearch,
+      title: "Transaction Monitoring",
       description:
-        "Understand the financial investment required for your chosen career, including education costs and potential earnings, to make informed decisions.",
+        "Continuously monitor online transactions using machine learning models to flag suspicious activities.",
       delay: 0.4,
     },
   ];
@@ -77,27 +76,27 @@ const Features = () => {
   const subFeatures = [
     {
       icon: ClipboardList,
-      title: "Personalized Assessments",
+      title: "Real-Time Fraud Detection",
       description:
-        "Users input their skills, education, and interests to receive tailored career options that align with their unique profiles.",
+        "Utilize advanced algorithms to instantly detect anomalies and prevent fraudulent transactions.",
     },
     {
-      icon: Map,
-      title: "Comprehensive Roadmaps",
+      icon: Eye,
+      title: "Behavioral Analysis",
       description:
-        "Detailed plans outlining necessary skills, stages of progression, and timeframes to achieve specific career milestones.",
+        "Analyze user behavior and spending patterns to identify potential fraud before it occurs.",
     },
     {
-      icon: TrendingUp,
-      title: "Market Trends Analysis",
+      icon: TrendingDown,
+      title: "Risk Scoring & Alerts",
       description:
-        "Stay informed about industry growth, company involvement, and future prospects in your chosen field.",
+        "Assign risk scores to transactions and trigger alerts for high-risk activities, ensuring quick action.",
     },
     {
-      icon: Lightbulb,
-      title: "Customized Suggestions",
+      icon: Lock,
+      title: "Secure Transaction Verification",
       description:
-        "Receive personalized advice and recommendations based on your selected career path to enhance your journey.",
+        "Implement multi-layered security checks to ensure the authenticity of online transactions.",
     },
   ];
 

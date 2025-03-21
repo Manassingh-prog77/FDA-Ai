@@ -54,12 +54,11 @@ const Footer = () => {
               <div className="flex items-center mb-6">
                 <Shield className="w-8 h-8 text-cyan-400 mr-2" />
                 <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                  UDAAN AI
+                  FDA AI
                 </span>
               </div>
               <p className="text-gray-400 mb-6">
-                Next-generation Career Guidance platform empowering students and working professionals with AI-driven
-                insights and assistance.
+              Next-generation Fraud Detection platform leveraging AI-driven insights to identify and prevent online transaction frauds in real-time.
               </p>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
@@ -109,7 +108,7 @@ const Footer = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-t border-gray-800">
           <div className="flex items-center">
             <Mail className="w-5 h-5 text-cyan-400 mr-3" />
-            <span className="text-gray-400">contact@satarkai.com</span>
+            <span className="text-gray-400">contact@fda.com</span>
           </div>
           <div className="flex items-center">
             <Phone className="w-5 h-5 text-cyan-400 mr-3" />
@@ -128,7 +127,7 @@ const Footer = () => {
           viewport={{ once: true }}
           className="pt-8 mt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()} Udaan AI. All rights reserved.
+            © {new Date().getFullYear()} FDA AI. All rights reserved.
           </p>
         </motion.div>
       </div>

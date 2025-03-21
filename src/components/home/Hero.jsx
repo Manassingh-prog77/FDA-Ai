@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Radar,
-  AlertCircle,
   ArrowRight,
-  GraduationCap,
+  TriangleAlert,
   PlayCircle,
   HeartHandshake,
-  TrendingUp,
-  BookOpenCheck
+  Shield,
+  BookOpenCheck,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,7 +45,7 @@ const GlowingBadge = ({ icon: Icon, text, color }) => (
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Your Personalized Career Companion";
+  const fullText = "OneStop Solution for detecting frauds";
   const navigate = useNavigate();
 
   const buttons = [
@@ -117,7 +115,7 @@ const Hero = () => {
           <motion.div
             variants={itemVariants}
             className="inline-flex items-center justify-center mb-6">
-            <GraduationCap className="w-16 h-16 text-cyan-400" />
+            <TriangleAlert className="w-16 h-16 text-cyan-400" />
           </motion.div>
 
           {/* Badges */}
@@ -125,10 +123,10 @@ const Hero = () => {
             variants={itemVariants}
             className="flex flex-wrap justify-center gap-4 mb-8">
             <GlowingBadge icon={HeartHandshake} text="Assured" color="cyan" />
-            <GlowingBadge icon={TrendingUp} text="Insights" color="cyan" />
+            <GlowingBadge icon={Shield} text="Safer" color="cyan" />
             <GlowingBadge
               icon={BookOpenCheck}
-              text="Discovery"
+              text="Trusted"
               color="cyan"
             />
           </motion.div>
@@ -138,7 +136,7 @@ const Hero = () => {
             variants={itemVariants}
             className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-            Navigate Your Path to Success
+            Secure Your Transaction with us
             </span>
           </motion.h1>
 
@@ -154,7 +152,7 @@ const Hero = () => {
           <motion.p
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Stay Ahead in Your Career with AI Powered Smart Guidance
+            Make your transactions secure with our AI-powered fraud detection
           </motion.p>
 
           {/* CTA Buttons */}

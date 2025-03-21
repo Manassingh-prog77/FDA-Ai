@@ -1,5 +1,5 @@
 import  { useState, useEffect } from "react";
-import { GraduationCap, Menu, X, Minimize2, Maximize2 } from "lucide-react";
+import { TriangleAlert, Menu, X, Minimize2, Maximize2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navigation = () => {
@@ -61,9 +61,9 @@ const Navigation = () => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center">
             <a href="/" className="flex items-center">
-              <GraduationCap className="h-8 w-8 text-cyan-500" />
+              <TriangleAlert className="h-8 w-8 text-cyan-500" />
               <span className="ml-2 text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UDAAN AI
+                FDA AI
               </span>
             </a>
           </motion.div>

@@ -1,10 +1,7 @@
-import React from "react";
 import { motion } from "framer-motion";
 import {
-  Users,
   CheckCircle,
-  Brain,
-  UserCheck, MessageCircle
+  Brain,ShieldCheck, Eye, Lock
 } from "lucide-react";
 
 const ServiceCard = ({
@@ -57,48 +54,49 @@ const ServiceCard = ({
 const Services = () => {
   const services = [
     {
-      title: "Personalized Career Planning",
+      title: "AI-Powered Fraud Detection",
       description:
-        "Customized career paths and development plans based on individual profiles.",
-      icon: UserCheck,
+        "Utilize advanced AI models to detect and prevent fraudulent transactions in real-time.",
+      icon: ShieldCheck,
       gradient: "bg-gradient-to-br from-cyan-500 to-blue-500",
       features: [
-        "Skill and interest assessment",
-        "Tailored career recommendations",
-        "Step-by-step career roadmaps",
-        "Timeframe estimations for career milestones",
-        "Continuous progress tracking",
+        "Real-time fraud monitoring",
+        "AI-driven anomaly detection",
+        "Automated risk assessments",
+        "Instant fraud alerts",
+        "Scalable and adaptive security",
       ],
     },
     {
-      title: "AI-Powered Counseling",
+      title: "Risk Analysis & Prevention",
       description:
-        "Real-time, AI-driven counseling sessions to address career-related questions and concerns.",
-      icon: MessageCircle,
+        "Assess risk levels and detect suspicious activities using behavioral analysis.",
+      icon: Eye,
       gradient: "bg-gradient-to-br from-blue-500 to-violet-500",
       features: [
-        "24/7 availability",
-        "Personalized advice",
-        "Interactive Q&A sessions",
-        "Resource recommendations",
-        "Confidential and secure interactions",
+        "User behavior profiling",
+        "Transaction risk scoring",
+        "Preventative fraud measures",
+        "Suspicious activity tracking",
+        "AI-powered predictive analytics",
       ],
     },
     {
-      title: "Professional Networking",
+      title: "Secure Transaction Verification",
       description:
-        "Connect with industry professionals for mentorship and guidance.",
-      icon: Users,
+        "Ensure safe and verified transactions through multi-layered security checks.",
+      icon: Lock,
       gradient: "bg-gradient-to-br from-violet-500 to-purple-500",
       features: [
-        "Access to a network of professionals",
-        "Mentorship opportunities",
-        "Industry insights",
-        "Career growth advice",
-        "Networking events and webinars",
+        "Multi-factor authentication",
+        "Encrypted transaction processing",
+        "Identity verification",
+        "Secure payment gateways",
+        "Regulatory compliance checks",
       ],
     },
   ];
+
 
   return (
     <section className="relative py-20 bg-black" id="services">
@@ -139,7 +137,7 @@ const Services = () => {
             Ready to Transform Your Career?
           </h3>
           <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-            Join the future of legal intelligence with Udaan AI's comprehensive
+            Join the future of legal intelligence with Udaan {"AI's"} comprehensive
             suite of tools
           </p>
           <motion.button

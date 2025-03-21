@@ -10,17 +10,13 @@ import {
   ChevronLeft,
   ChevronRight,
   User,
-  Home,BriefcaseBusiness, 
-  CalendarCheck,
-  Cable,
+  Home,ChartArea, 
   Lock,
   GraduationCap,
-  MessageSquare,
-  BarChart2,
+  Brain,
   Maximize2,
   Minimize2,
   MapPin,
-  UsersRound
 } from "lucide-react";
 
 
@@ -89,34 +85,34 @@ const Layout = () => {
   const menuItems = [
     { icon: Home, label: "Dashboard", path: "/dashboard" },
     {
-      icon: MessageSquare,
-      label: "Career Path",
+      icon: Brain,
+      label: "Prediction Model",
       path: "/dashboard/investigation",
     },
+    // {
+    //   icon: UsersRound,
+    //   label: "AI Consultant",
+    //   path: "/dashboard/generate",
+    //   isPro:true
+    // },
+    // {
+    //   icon: Cable,
+    //   label: "Industry Link",
+    //   path: "/dashboard/analysis",
+    //   isPro: true,
+    // },
+    // {
+    //   icon: CalendarCheck,
+    //   label: "Level Up",
+    //   develop:true,
+    //   disable:true
+    // },
     {
-      icon: UsersRound,
-      label: "AI Consultant",
-      path: "/dashboard/generate",
-      isPro:true
-    },
-    {
-      icon: Cable,
-      label: "Industry Link",
-      path: "/dashboard/analysis",
-      isPro: true,
-    },
-    {
-      icon: CalendarCheck,
-      label: "Level Up",
-      develop:true,
-      disable:true
-    },
-    {
-      icon: BriefcaseBusiness,
-      label: "Career Simulation",
+      icon: ChartArea,
+      label: "Time Series Graph",
       path: "/dashboard/experince",
     },
-    { icon: BarChart2, label: "Budget Buddy", path: "/dashboard/knowledge" },
+    // { icon: BarChart2, label: "Budget Buddy", path: "/dashboard/knowledge" },
   ];
 
   const Navbar = () => (
